@@ -1,0 +1,143 @@
+<style>
+select {
+  width: 120px;
+  height: 40px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  border: 2px solid #333;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+    .account-table{
+	width :100%;
+	border-collapse :collapse;
+}
+
+.account-table th, .account-table td{
+	padding :10px;
+	border :1px solid #cccccc;
+	text-align :center;
+}
+
+.account-table th, .post-table th {
+	background-color :#0099ff;
+	color :white;
+}
+
+.reset-button, .status-button{
+	width :100px;
+	height :50px;
+	border :none;
+	border-radius :15px;
+	color :white;
+
+}
+
+.status-button {
+	background-color :#00cc00;
+}
+
+.reset-button {
+	background-color :#cc0000;
+}
+
+.back-button {
+    position: absolute;
+    left: 20px;
+    bot: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+option {
+  color: #fff;
+  background-color: #333;
+}
+
+
+option:checked {
+  color: #333;
+  background-color: #fff;
+}
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Duyệt bài đăng</title>
+</head>
+<body>
+    <h2>Duyệt bài đăng</h2>
+
+    <!-- Tạo một bảng hiển thị thông tin các tài khoản người dùng -->
+    <!-- Bạn cần phải kết nối với cơ sở dữ liệu để lấy dữ liệu thực tế -->
+    {%if ds%} 
+    <table class="account-table">
+        <thead>
+            <tr>
+                <th>ID Bài đăng</th>
+                <th>Tiêu đề</th>						
+                <th>Ngày đăng</th>
+                <th>Loại</th>
+                <th>Diện tích (m3)</th>
+                <th>Giá bán</th>
+            </tr>
+        </thead>
+        <!--Hiển thị thông tin-->
+        <!-- Cần lấy dữ liệu từ database-->
+        <!--Dữ liệu test-->
+        <tbody>
+            {% for baidang in ds %}
+                <tr>
+                    <td>
+                        <a href="{% url 'duyet_baidang' baidang.id_baidang %}">
+                            {{baidang.id_baidang}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'duyet_baidang' baidang.id_baidang %}">
+                            {{baidang.tieude}}
+                        </a>
+                    </td>
+                    <td><span>{{baidang.ngaydang}}</span></td>                        
+                    {%if baidang.loai == 'NHA' %}
+                        <td><span>Nhà ở</span></td>
+                    {%else%}
+                        <td><span>Chung cư</span></td>
+                    {%endif%}
+                    <td><span>{{baidang.dientich}}</span></td>
+                    <td><span>{{baidang.giaban}}</span></td>
+                </tr>
+              {%endfor%}
+            {% comment %} <tr>
+                
+                <td>1</td>
+                <td>admin1</td>
+                <td>user1@gmail.com</td>
+                <td>Admin</td>
+                <td>Hoạt động</td>
+                <td>
+                    <button class="reset-button">Reset password</button>
+                    <button class="status-button">Đổi trạng thái</button>
+                </td>
+            </tr> {% endcomment %}
+
+
+        </tbody>
+    </table>
+    {%else%}
+      <h3>Không có dữ liệu</h3>
+    {%endif%}
+<a href="javascript:history.back ()" class="back-button">Quay lại</a>
+
+</body>
+</html>
